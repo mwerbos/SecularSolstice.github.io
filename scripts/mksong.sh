@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set -ex
+
+cd $(dirname $0)/../songs
+
 NAME="$1"
 TYPE="$2"
 
@@ -63,13 +67,23 @@ EOF
         touch $NAME/sheet-music.ly
         ;;
 
+    mscx)
+        cat >>$NAME/Makefile <<EOF
+
+FILES_TO_LIST=lyrics.txt sheet_music.pdf from_midi.mp3
+
+gen/${PREFIX}lyrics.txt: sheet-music.mscx
+	../scripts/mscx-to-lyrics.py sheet-music.mscx > gen/${PREFIX}lyrics.txt
+EOF
+        touch $NAME/sheet-music.mscx
+        ;;
     *)
-        echo "Unrecognized format '$TYPE', can be text, stub, ugc, cho or ly"
+        echo "Unrecognized format '$TYPE', can be text, stub, ugc, cho, ly or mscx"
         ;;
 
 esac
 
-echo 'include ../scripts/Makefile.common' >>$NAME/Makefile
+echo 'include ../Makefile.common' >>$NAME/Makefile
 
 cd $NAME
 shopt -s extglob

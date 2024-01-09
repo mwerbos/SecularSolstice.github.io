@@ -7,9 +7,9 @@ def parseAsChords(line):
     out = {'klass': 'chords', 'val':[]}
     pos = 0
     for w in ws:
-        if re.match('^[A-Gm0-9#b/sus]+$', w):
+        if re.match('^[A-G][A-Gmajd0-9#b/sus]*$', w):
             out['val'].append([pos,w])
-        elif not re.match('^ *$', w):
+        elif not re.match('^ *-? *$', w):
             return False
         pos += len(w)
     return out
@@ -17,6 +17,8 @@ def parseAsChords(line):
 def parseLine(line, nextline):
     if re.match('^[- ]*$', line):
         return { 'klass': 'blank' }
+    if re.match('^\\[[A-Za-z0-9 -]*\\] *', line):
+        return { 'klass': 'heading', 'val':line.strip()[1:-1]}
     chords = parseAsChords(line)
     if chords:
         return chords
@@ -57,9 +59,13 @@ savedchords = None
 for p in parse(open(sys.argv[1])):
     if sys.argv[2] == '--lyrics':
         if p['klass']=='text':
-            print(p['val'])
+            cleaner = re.sub(' +- +', '', p['val'])
+            cleaner = re.sub(' +', ' ', cleaner)
+            print(cleaner)
         if p['klass']=='blank':
             print('')
+        if p['klass']=='heading':
+            print('# '+p['val'])
     if sys.argv[2] == '--cp':
         if p['klass']=='chords':
             if savedchords:
@@ -75,3 +81,5 @@ for p in parse(open(sys.argv[1])):
             print('')
         if p['klass']=='title':
             print('{title: %s}' % p['val'])
+        if p['klass']=='heading':
+            print('{comment: '+p['val']+'}')

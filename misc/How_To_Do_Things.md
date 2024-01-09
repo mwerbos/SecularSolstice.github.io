@@ -62,9 +62,11 @@ Note that the grand list of programs puts programs A-L in th left column and M-Z
 
 First gain basic proficiency with git.  There are lots of tutorials online, but I don't have a specific one to recommend.  Or, if you work any sort of technical job, you probably already have this.  If you skip this step, you'll be able to take the next bunch, but may get stuck *after* having done substantive work.
 
-Install the tools you'll need.  This will always include `pandoc`, `python`, `git`, `make` and `imagemagick`.  If you're using lilypond format, you'll also want `lilypond`, `timidity`, `lame` and `frescobaldi`.  If you're using chordpro or ugc format, you'll also want `chordpro`, which annoyingly can only be installed from `cpanminus`.  For true thoroughness, get a recent version of `wkhtmltox` (one with the qt patch).  For exact commands on how to do this, see the [Dockerfile](https://github.com/SecularSolstice/SecularSolstice.github.io/blob/master/.github/workflows/Dockerfile).  Ignore the bit about getting the latest git -- only github actions need that.  (Technically you *could* work from inside a docker container, but I wouldn't recommend it.)
+Install the tools you'll need.  This will always include `pandoc`, `python`, `git`, `make` and `imagemagick`.  If you're using lilypond format, you'll also want `lilypond`, `timidity`, `lame` and `frescobaldi`.  If you're using chordpro or ugc format, you'll also want `chordpro`, which annoyingly can only be installed from `cpanminus`.  For true thoroughness, get a recent version of `wkhtmltox` (one with the qt patch) and `pdfjam` (in the `texlive-extra-utils` package in most distros).  For exact commands on how to do this, see the [Dockerfile](https://github.com/SecularSolstice/SecularSolstice.github.io/blob/master/.github/workflows/Dockerfile).  Ignore the bit about getting the latest git -- only github actions need that.  (Technically you *could* work from inside a docker container, but I wouldn't recommend it.)
 
 Then just `git clone https://github.com/SecularSolstice/SecularSolstice.github.io.git`.
+
+You may wish to use `scripts/fixdates.sh` to set all Last Modified Times to the commits they were made on, rather than the time git cloned the files.  This will help ensure `make all` builds what it should and not what it shouldn't.
 
 ## How to Add a Song
 
@@ -91,6 +93,7 @@ Format can be one of the following (so far; growth mindset):
 * **ugc**: Ultimate Guitar Chord format.  With chord names above lyrics.  Always Look on the Bright Side provides an [example](/Always_Look_on_the_Bright_Side/chord-sheet.ugc).
 * **cho**: Chordpro Format, with chords in brackets amidst lyrics.  There's some bonus features for optimal viewing on an iphone while performing.  Somewhere to Begin provides an [example](/Somewhere_to_Begin/chord-sheet.cho)
 * **ly**: Lilypond Format, complete sheet music.  This format is [documented](https://lilypond.org/manuals.html).  Bring the Light offers a relatively straightforward [example](/Bring_the_Light/sheet-music.ly).  If you're using this format seriously, you'll probably want the [Frescobaldi editor](https://frescobaldi.org).
+* **mscx**: Music XML formal, also complete sheet music.  A [W3C Standard](https://www.musicxml.com/) supported natively by the open source [Musescore](https://musescore.org/en) and as an import/export format by many other programs.
 
 This script will create a directory for the song and the relevant files (though the files with the content will be empty).
 

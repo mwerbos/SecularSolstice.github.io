@@ -1,3 +1,5 @@
+@import url("make-program-magic-that-is-probably-not-there.css");
+
 html {
     background-image: url(dawn-bkg.jpg);
     background-color: #334477;
@@ -13,6 +15,11 @@ html.light {
     background-image: url(snow-bkg.jpg);
     background-color: white;
     color: black;
+}
+
+html.transparent {
+    background-image: none !important;
+    background-color: transparent !important;
 }
 
 body {
@@ -45,6 +52,37 @@ h2 {
     text-shadow: 0 0 0.5em black, 0 0 2em #003;
     font-size: 20pt;
 }
+
+div.autolyric {
+    text-align:center;
+    text-shadow: 0 0 0.5em black, 0 0 2em #003;
+    width: 90vw;
+    left: 10vw;
+    position: absolute;
+    top: 95vh;
+    font-size: 1pt;
+    color: white;
+}
+
+div.autolyric.hl {
+    color: yellow;
+}
+
+.light div.autolyric {
+    text-align:center;
+    text-shadow: 0 0 0.5em white, 0 0 2em white;
+    color: black;
+    width: 100%;
+    position: absolute;
+    top: 95vh;
+    font-size: 1pt;
+}
+
+.light div.autolyric.hl {
+    color: #c00;
+    text-shadow: 0 0 0.5em cyan, 0 0 2em cyan;
+}
+
 
 .light h2 {
     text-shadow: 2px 2px 0.5em white,
@@ -110,7 +148,7 @@ ul,p.lyrics {
 }
     
 
-ul {
+ul,ol {
     padding-left: 1.5em;
 }
 
@@ -135,12 +173,15 @@ a {
     color: #006;
 }
 
-p,table,pre {
+p,table,pre,ol {
     margin: auto ;
     background: rgba(0,0,0,0.6);
 }
 
 .light p {
+    background: rgba(255,255,255,0.7);
+}
+.light ol {
     background: rgba(255,255,255,0.7);
 }
 .light table {
@@ -191,6 +232,10 @@ td {
 
 .small {
     font-size: smaller;
+}
+
+.transparent .header {
+    display: none;
 }
 
 .header {
@@ -274,6 +319,11 @@ a.themeSwitcher {
     color: white;
 }
 
+div.figure > img {
+    max-width: 100%;
+    opacity: 0.8;
+}
+
 @media (max-width: 600px) {
     body {
         max-width: 95%;
@@ -285,6 +335,13 @@ a.themeSwitcher {
     * {
         background: white !important;
         color: black !important;
+	text-shadow: none !important;
+    }
+    body {
+	width: 100%;
+	max-width: 100%;
+	margin: 0px;
+	padding: 0px;
     }
 }
                     

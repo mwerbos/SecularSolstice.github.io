@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-TITLE="$(basename $(pwd) | tr '_' ' ')"
+set -ex
+
+cd $(dirname $0)/..
 
 cat <<EOF
 <html>
@@ -42,17 +44,17 @@ echo "<h1>Programs</h1>"
 
 echo "<center><div class=col>"
 ISCOL2=""
-for i in lists/gen/*.html; do
+for i in $(ls lists/gen/*.html | sort); do
     if [ "$i" != "index.html" ] &&
-           ! echo "$i" | egrep 'tentative|All_' > /dev/null; then
-        if echo "$i" | grep '^lists/gen/[M-Zm-z]' > /dev/null && [ -z "$ISCOL2" ]; then
+           ! echo "$i" | egrep 'tentative|options|slides|All_' > /dev/null; then
+        if echo "$i" | grep '^lists/gen/[N-Zn-z]' > /dev/null && [ -z "$ISCOL2" ]; then
             echo "</div><div class=col>"
             ISCOL2="True"
         fi
         echo "<a href=../../$i><h2>"
         echo "$i" | sed 's@.*/gen/@@' | sed 's/.html//' | tr '_' ' '
         echo '</h2>'
-        grep '<h3>' $i 
+        grep '<h3>' $i || true
         echo "</a>"
     fi
 done
